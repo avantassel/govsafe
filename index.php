@@ -73,7 +73,13 @@
             <ul class="pricing-table">
               <li class="title step2"><span class="step">2</span> Center</li>
               <li class="description">Choose an assistence center</li>
-              <li class="cta-button"><a class="button" href="#">Choose One</a></li>
+              <li class="cta-button">                
+                <a href="#" data-dropdown="center" class="button dropdown">Choose</a><br>
+                <ul id="center" data-dropdown-content class="f-dropdown">
+                  <li><a href="#">Boulder</a></li>
+                  <li><a href="#">Denver</a></li>
+                </ul>
+              </li>
             </ul>
           </div>
  
@@ -146,6 +152,13 @@
 
     $('#locate').on('click',function(){
       locate();
+    });
+
+    $('#center li').on('click',function(){
+      $('.step2 span').addClass('done');
+      $center = $(this).find('a').html();
+      $href = $('#start-form').attr('href');
+      $('#start-form').attr('href',$href+'&center='+$center);
     });
 
     function locate(){
