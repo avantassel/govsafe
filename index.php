@@ -27,9 +27,7 @@
       <!-- Navigation -->
  
         <ul class="button-group">
-          <li><a href="#" class="button">Nav Item 1</a></li>
-          <li><a href="#" class="button">Nav Item 2</a></li>
-          <li><a href="#" class="button">Nav Item 3</a></li>
+          <li><a href="#" class="button">About</a></li>
         </ul>
  
       <!-- End Navigation -->
@@ -121,10 +119,8 @@
  
               <div class="large-6 columns">
                   <ul class="inline-list right">
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                    <li><a href="#">Link 3</a></li>
-                    <li><a href="#">Link 4</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
                   </ul>
               </div>
  
