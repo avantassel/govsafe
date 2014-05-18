@@ -89,13 +89,25 @@ if(!empty($api_response))
               <td><button class="button">Print</button></td>
               <td><?=$r->metadata->date_submit?></td>
               <? foreach($r->answers as $k=>$v){ ?>
-                <td><?=$v?></td>              
+                <td>
+                <label for="<?=$r->token.$k?>"><?=$v?></label>
+                <? if(!empty($v) && strstr($k, 'list')){
+                      echo '<input type="checkbox" id="'.$r->token.$k.'"/>';
+                  }
+                  ?>
+                </td>              
               <? } ?>   
               <? foreach($r->hidden as $k=>$v){ 
                 if($k=='location')
                   $users .= '|'.$v;
                 ?>
-                <td><?=$v?></td>              
+                <td>
+                  <label for="<?=$r->token.$k?>"><?=$v?></label>
+                <? if(!empty($v) && strstr($k, 'list')){
+                      echo '<input type="checkbox" id="'.$r->token.$k.'"/>';
+                  }
+                  ?>
+                </td>              
               <? } ?>              
             </tr>
             <? } ?>
