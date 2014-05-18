@@ -1,3 +1,7 @@
+<?
+  $centers=file_get_contents('centers.json');
+  $centers_json=json_decode($centers);
+?>
 <?php
 require('Services/Twilio.php'); 
  
@@ -63,54 +67,9 @@ $client->account->messages->create(array(
  
       <!-- Steps -->
  
-        <div class="row steps">
- 
-          <div class="large-3 small-12 columns">
-            <ul class="pricing-table">
-              <li class="title step1"><span class="step">1</span> Locate</li>
-              <li class="description">Get your current location</li>
-              <li class="cta-button"><a class="button" id="locate" href="#">Locate You</a></li>
-            </ul>
-          </div>
- 
-          <div class="large-3 small-12 columns">
-            <ul class="pricing-table">
-              <li class="title step2"><span class="step done">2</span> Center</li>
-              <li class="description">Choose an assistence center</li>
-              <li class="cta-button">                
-                <a href="#" data-dropdown="center" class="button dropdown">Choose</a><br>
-                <ul id="center" data-dropdown-content class="f-dropdown">
-                  <li><a href="#">Boulder</a></li>
-                  <li><a href="#">Denver</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
- 
-          <div class="large-3 small-12 columns">
-            <ul class="pricing-table">
-              <li class="title step3"><span class="step done">3</span> Form</li>
-              <li class="description">Fill out one form</li>
-              <li class="cta-button"><a class="typeform-share button" id="start-form" href="https://avantassel.typeform.com/to/ToheBD" data-mode="1" target="_self">Get Started</a></li>
-            </ul>
-          </div>
- 
-          <div class="large-3 small-12 columns">
-            <ul class="pricing-table">
-              <li class="title step4"><span class="step done">4</span> Status</li>
-              <li class="description">Track your status with the state</li>
-              <li class="cta-button"><a class="button" href="#">Track</a></li>
-            </ul>
-          </div>
- 
-        </div>
- 
         <div class="row"> 
             <div class="large-12 columns">
               <h2>Your forms have been submitted to the assistence center.</h2>
-          <div class="progress small-12 large-12 success] radius">
-            <span class="meter" style="width: 10%"></span>            
-          </div>
           </div>
         </div>
 
@@ -120,9 +79,27 @@ $client->account->messages->create(array(
             <div class="large-12 columns">
               <div class="radius panel">
                 <div id="maparea">
-                  
+                  <img src="images/spinner.gif"/> Getting your Location...
                 </div>            
-            </div> 
+              </div> 
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="large-12 columns">
+              <p>You have choosen <b>Denver - Cheeseman Park</b> for your disaster assistance center.</p>
+              <p>Cheeseman Park<br>
+                1599 E 8th Ave<br>
+                Denver, CO 80218<br>
+              </p>
+              <p>Phone: 303-389-2393</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="large-12 columns">
+              <button class="button">Print My Form</button>
+              <a href="/" class="button">Submit another form</a>
             </div>
           </div>
  
@@ -157,8 +134,10 @@ $client->account->messages->create(array(
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="js/jquery.geolocation.js"></script>
     <script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'share.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}id=id+'_';if(!gi.call(d,id)){qs=ce.call(d,'link');qs.rel='stylesheet';qs.id=id;qs.href=b+'share-button.css';s=gt.call(d,'head')[0];}})()</script>
-    <script type="text/javascript">
-
+    <script type="text/javascript">var form_href = 'https://avantassel.typeform.com/to/ToheBD';
+    var loc = '';
+    var center = '';
+    var center_list = <?=json_encode($centers_json->centers);?>;
     $(document).ready(function () {
     
     locate();
@@ -169,15 +148,14 @@ $client->account->messages->create(array(
 
     $('#center li').on('click',function(){
       $('.step2 span').addClass('done');
-      $center = $(this).find('a').html();
-      $href = $('#start-form').attr('href');
-      $('#start-form').attr('href',$href+'&center='+$center);
+      center = $(this).data('center');   
+      $('#start-form').attr('href',form_href+'?location='+loc+'&center='+center);
     });
 
     function locate(){
-      $('#maparea').html('<img src="images/spinner.gif"/> Getting your Location...');
-
       $.geolocation(function (lat, lng) {
+          loc=lat+','+lng;
+
           var myLatlng = new google.maps.LatLng(lat, lng);
           var mapOptions = {
               center: new google.maps.LatLng(lat, lng),
@@ -187,17 +165,33 @@ $client->account->messages->create(array(
           var marker = new google.maps.Marker({
               position: myLatlng,
               map: map,
-              title: "Your Location"
+              icon: '/images/user.png'
           });
-          $href = $('#start-form').attr('href');
-          $('#start-form').attr('href',$href+'?ll='+lat+','+lng);
+
+          $.each(center_list,function(k,v){
+            var from = new google.maps.LatLng(lat,lng);
+            var to   = new google.maps.LatLng(v.lat,v.lng);
+            //var dist = google.maps.geometry.spherical.computeDistanceBetween(from, to);
+            //$('#'+v.id).html($('#'+v.id).html()+' '+dist);
+          });
+
+          <? foreach ($centers_json->centers as $c) {?>
+            var marker = new google.maps.Marker({
+              position: new google.maps.LatLng(<?=$c->lat.','.$c->lng?>),
+              map: map,
+              icon: '/images/center.png',
+              title: "<?=$c->name?>"
+            });     
+            
+          <? } ?>
+          
+          $('#start-form').attr('href',form_href+'?location='+loc+'&center='+center);
           $('#start-form').removeClass('hide');
 
           $('.step1 span').addClass('done');
       });
     }
 });
-
     </script>
     
     <script>

@@ -1,4 +1,3 @@
-
 <?
   $centers=file_get_contents('centers.json');
   $centers_json=json_decode($centers);
