@@ -1,4 +1,4 @@
-angular.module('govsafeApp', ['ngTable']).
+angular.module('govsafeApp', []).
 controller('AdminCtrl', function($scope,$http,$q,$sce) {
 
 	$scope.responses = {};

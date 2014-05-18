@@ -24,7 +24,6 @@ if(!empty($api_response))
 
     <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/app.css" />
-    <link rel="stylesheet" href="css/ng-table.css" />
     <script src="js/vendor/modernizr.js"></script>    
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsbzoLjGocnaRHZF3IBMFVI-X41vPl6qM&sensor=true"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
@@ -68,33 +67,37 @@ if(!empty($api_response))
  
       <!-- Steps -->
  
-        <div class="row steps" >
+        <div class="row steps" >         
+        
           <div class="large-12 columns">
 
           <div id="maparea"></div>
 
-          <table width="100%">
+          <h4 class="subheader">Search</h4>
+          <input type="text" placeholder="Search for name, address, center, etc..." ng-model="searchText">            
+  
+          <table width="100%" ng-table="tableParams" show-filter="true">
           <thead>
             <tr>
               <th></th>
-              <th sortable="date">Date</th>
-              <th sortable="name">Name</th>
-              <th sortable="email">Email</th>
-              <th sortable="address">Address</th>
-              <th sortable="phone">Phone</th>
-              <th sortable="center">Center</th>
-              <th sortable="eta">ETA</th>              
+              <th>Date</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Center</th>
+              <th>ETA</th>              
               <th>Assistance Needed</th>
               <th>Kids and Pets</th>
             </tr>
           </thead>
           <tbody>            
-            <tr ng-repeat="response in responses">
+            <tr ng-repeat="response in responses | filter:searchText">
               <td><button class="printBtn button">Print</button></td>
               <td>{{response.metadata.date_submit}}</td>              
               <td>{{response.answers.textfield_913754}}</td>
-              <td>{{response.answers.email_913755}}</td>              
               <td>{{response.answers.textarea_913965}}</td>
+              <td>{{response.answers.email_913755}}</td>              
               <td>{{response.answers.number_913759}}</td>
               <td>{{response.hidden.center}}</td>
               <td>{{response.answers.dropdown_913966}}</td>
@@ -138,7 +141,6 @@ if(!empty($api_response))
     <script src="js/cluster.js"></script>    
     <script src="js/foundation.min.js"></script>
     <script src="js/jquery.geolocation.js"></script>
-    <script src="js/vendor/ng-table.min.js"></script>
     <script src="js/admin.js"></script>
     <script type="text/javascript">
         $(document).foundation();            
