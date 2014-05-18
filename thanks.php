@@ -1,4 +1,16 @@
-
+<?php
+require('Services/Twilio.php'); 
+ 
+$account_sid = 'AC4686f9b878ee5ccc013e97f4538538cc'; 
+$auth_token = '5384c08fab0b9f81e97d36203084f57c'; 
+$client = new Services_Twilio($account_sid, $auth_token); 
+ 
+$client->account->messages->create(array( 
+  'To' => "7203363337", 
+  'From' => "+17205482605", 
+  'Body' => "Your GovSAFE confirmation #: 302313",   
+));
+?>
 <!doctype html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
@@ -15,7 +27,8 @@
 
     <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/app.css" />
-    <script src="js/vendor/modernizr.js"></script>    
+    <script src="js/vendor/modernizr.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsbzoLjGocnaRHZF3IBMFVI-X41vPl6qM&sensor=true"></script>
   </head>
   <body>
     
@@ -34,21 +47,17 @@
  
       <!-- Header Content -->
  
-        <div class="row panel">
- 
-          <div class="large-12 columns">
-            
-            <p>
-                SAFE is the Survivor Assistance Form Editor
-            </p>
-            <h2>Thank you we'll see you soon.</h2>
-
-            <h5 class="subheader"></h5>
-                      
+        <div class="row panel header">
+          <div class="large-2 columns">
+            <img src="images/safe-logo.png">
+          </div>
+          <div class="large-10 columns">
+            <p>Survivor Assistance Form Editor</p>
+            <h2>One form to start disaster assistance.</h2>
+          </div>
+          
         </div>
-  
-    </div>
-
+ 
       <!-- End Header Content -->
  
  
@@ -131,6 +140,7 @@
                   <ul class="inline-list right">
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
+                    <li><a href="/login.php">Admin Login</a></li>
                   </ul>
               </div>
  
