@@ -48,7 +48,7 @@
               <legend>Access Admin</legend>
 
               <label>Username
-                <input type="text" id="username" placeholder="test">
+                <input type="text" id="username" placeholder="">
               </label>
 
               <label>Password
