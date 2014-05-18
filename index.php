@@ -27,8 +27,7 @@
       <!-- Navigation -->
  
         <ul class="button-group">
-          <li><a class="typeform-share button" href="https://avantassel.typeform.com/to/QFKQ48" data-mode="1" target="_self">Volunteer</a></li>
-          <li><a href="admin.php" class="button">Admin</a></li>
+          <li><a class="typeform-share button" href="https://avantassel.typeform.com/to/QFKQ48" data-mode="1" target="_self">Volunteer</a></li>          
         </ul>
  
       <!-- End Navigation -->
