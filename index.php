@@ -34,17 +34,14 @@
  
       <!-- Header Content -->
  
-        <div class="row panel">
- 
-          <div class="large-12 columns">
-            
-            <p>
-                SAFE is the Survivor Assistance Form Editor
-            </p>
-            <h2>One form to start state assistance.</h2>
-
-            <h5 class="subheader"></h5>
-            </div>
+        <div class="row panel header">
+          <div class="large-2 columns">
+            <img src="images/safe-logo.png">
+          </div>
+          <div class="large-10 columns">
+            <p>Survivor Assistance Form Editor</p>
+            <h2>One form to start disaster assistance.</h2>
+          </div>
           
         </div>
  

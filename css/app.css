@@ -35,3 +35,8 @@ span.step.done {
 #maparea img {
 max-width: none;
 }
+
+
+.row.header {
+	margin: 0 0 1em;
+}
