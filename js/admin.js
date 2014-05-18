@@ -1,11 +1,11 @@
-angular.module('govsafeApp', []).
-controller('AdminCtrl', function($scope,$http,$q) {
+angular.module('govsafeApp', ['ngTable']).
+controller('AdminCtrl', function($scope,$http,$q,$sce) {
 
 	$scope.responses = {};
 	$scope.totalSurvivors = 0;
 
 	function setSurvivors(data){
-		$scope.responses = data.responses;	
+		$scope.responses = data.responses;			
 		$scope.totalSurvivors = data.stats.responses.completed;
 
 		setTimeout(function(){
@@ -39,6 +39,15 @@ $scope.toggleSave = function(e){
     } else {
       helpElement.addClass('saved');
     }
+};
+
+$scope.getAnswers = function(answers,search){
+	var help = "";
+	$.each(answers, function(k,v){
+		if(k.indexOf(search) != -1 && v != "")
+			help += '</br>&bull;'+v;
+	});
+	return $sce.trustAsHtml(help);
 };
 
   $scope.markers = [];
