@@ -2,6 +2,7 @@
 $api_key = '06e283cf9a2f96c5674821ef2335742b8f4a362b';
 $api_url = 'https://api.typeform.com/v0/form/ToheBD?key=06e283cf9a2f96c5674821ef2335742b8f4a362b&completed=true';
 $users = "";
+$fields = array('textfield_913754','email_913755','textarea_913965','number_913759','dropdown_913966','hidden_center');
 
 $api_response=@file_get_contents($api_url);
 if(!empty($api_response))
@@ -23,9 +24,10 @@ if(!empty($api_response))
 
     <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/app.css" />
-    <script src="js/vendor/modernizr.js"></script>
+    <link rel="stylesheet" href="css/ng-table.css" />
+    <script src="js/vendor/modernizr.js"></script>    
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsbzoLjGocnaRHZF3IBMFVI-X41vPl6qM&sensor=true"></script>
-    <script src="js/cluster.js"></script>    
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
   </head>
   <body ng-app="govsafeApp">
     
@@ -47,7 +49,7 @@ if(!empty($api_response))
  
         <div class="row panel">
  
-          <div class="large-12 columns">
+          <div class="large-10 columns">
             
             <p>
                 SAFE is the Survivor Assistance Form Editor
@@ -56,7 +58,9 @@ if(!empty($api_response))
 
             <h5 class="subheader"></h5>
             </div>
-          
+            <div class="large-2 columns">
+
+            </div>
         </div>
  
       <!-- End Header Content -->
@@ -69,32 +73,37 @@ if(!empty($api_response))
 
           <div id="maparea"></div>
 
-          <? if(!empty($api_response_json)){ ?>
-          <table>
+          <table width="100%">
           <thead>
             <tr>
               <th></th>
-              <th>Date</th>
-              <? foreach($api_response_json->questions as $q){ ?>
-              <th><?=$q->question?></th>
-              <? } ?>
+              <th sortable="date">Date</th>
+              <th sortable="name">Name</th>
+              <th sortable="email">Email</th>
+              <th sortable="address">Address</th>
+              <th sortable="phone">Phone</th>
+              <th sortable="center">Center</th>
+              <th sortable="eta">ETA</th>              
+              <th>Assistance Needed</th>
+              <th>Kids and Pets</th>
             </tr>
           </thead>
           <tbody>            
             <tr ng-repeat="response in responses">
               <td><button class="printBtn button">Print</button></td>
               <td>{{response.metadata.date_submit}}</td>              
-              <td ng-repeat="(k,v) in response.answers" ng-class="hasList(k,v)" ng-click="toggleSave($event)">
-                {{v}}
-              </td>
-              <td ng-repeat="(k,v) in response.hidden" ng-class="hasList(k,v)" ng-click="toggleSave($event)">
-                {{v}}
-              </td>    
-            </tr>
-            
+              <td>{{response.answers.textfield_913754}}</td>
+              <td>{{response.answers.email_913755}}</td>              
+              <td>{{response.answers.textarea_913965}}</td>
+              <td>{{response.answers.number_913759}}</td>
+              <td>{{response.hidden.center}}</td>
+              <td>{{response.answers.dropdown_913966}}</td>
+              <td ng-bind-html="getAnswers(response.answers,'list_915095_choice')"></td>
+              <td ng-bind-html="getAnswers(response.answers,'list_915092_choice')"></td>
+            </tr>            
           </tbody>
         </table>
-        <? } ?>
+        
         </div>
         </div>
 
@@ -125,15 +134,14 @@ if(!empty($api_response))
  
     </div>
   </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>        
+    <script src="js/cluster.js"></script>    
     <script src="js/foundation.min.js"></script>
     <script src="js/jquery.geolocation.js"></script>
+    <script src="js/vendor/ng-table.min.js"></script>
     <script src="js/admin.js"></script>
-        
-      <script type="text/javascript">
+    <script type="text/javascript">
         $(document).foundation();            
-      </script>
 
       function PdfUtil(url) {
           var iframe;
@@ -157,7 +165,6 @@ if(!empty($api_response))
           }
           __construct(url);
       }
-
 
       $(document).ready(function () {    
 
