@@ -94,7 +94,7 @@
               <td>{{response.answers.number_913759}}</td>
               <td>{{response.hidden.center}}</td>
               <td>{{response.answers.dropdown_913966}}</td>
-              <td ng-bind-html="getAnswers(response.answers,'list_915095_choice')"></td>
+              <td ng-bind-html="getAnswers(response.answers,'list_915095_choice')" class="help-needed" ng-click="toggleSave($event)"></td>
               <td ng-bind-html="getAnswers(response.answers,'list_915092_choice')"></td>
             </tr>            
           </tbody>

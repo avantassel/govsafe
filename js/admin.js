@@ -1,13 +1,24 @@
 angular.module('govsafeApp', []).
 controller('AdminCtrl', function($scope,$http,$q,$sce) {
 
-	$scope.responses = {};
+	$scope.since = '';
+	$scope.responses = [];
 	$scope.totalSurvivors = 0;
 
 	function setSurvivors(data){
-		$scope.responses = data.responses;			
-		$scope.totalSurvivors = data.stats.responses.completed;
+		
+		$scope.responses=data.responses;
+		
+		// if($scope.responses.length==0)
+		// 	$scope.responses=data.responses;
+		// else if(data.responses.length>0){
+		// 	$.each(data.responses,function(k,v){
+		// 		$scope.responses.push(data.responses[k]);
+		// 	});	
+		// }			
 
+		$scope.totalSurvivors = data.stats.responses.completed;
+		$scope.since = new Date().getTime();
 		setTimeout(function(){
 			getSurvivors();
 		},500);
@@ -15,6 +26,7 @@ controller('AdminCtrl', function($scope,$http,$q,$sce) {
 
 	function getSurvivors(){
 		
+        // $http.get('getsurvivors.php',{params: {since:$scope.since}, timeout: 10000}).then(function(response){
         $http.get('getsurvivors.php',{timeout: 10000}).then(function(response){
 
             setSurvivors( response.data ); 
@@ -24,13 +36,6 @@ controller('AdminCtrl', function($scope,$http,$q,$sce) {
 
 	getSurvivors();
 	
-	$scope.hasList = function(k,v){
-		if(k.indexOf('list')!=-1)
-			return 'help-needed';
-		else
-			return '';
-	};
-
 $scope.toggleSave = function(e){
 	var helpElement = angular.element(e.target);
 
@@ -45,7 +50,7 @@ $scope.getAnswers = function(answers,search){
 	var help = "";
 	$.each(answers, function(k,v){
 		if(k.indexOf(search) != -1 && v != "")
-			help += '</br>&bull;'+v;
+			help += '</br>&bull; '+v;
 	});
 	return $sce.trustAsHtml(help);
 };
@@ -63,7 +68,7 @@ $scope.getAnswers = function(answers,search){
   $scope.markerCluster = new MarkerClusterer($scope.map);
 
 	$scope.$watch('totalSurvivors',function(oldVal,newVal){
-		if(oldVal==newVal || !$scope.responses)
+		if(oldVal==newVal)
 			return;
 
 		$scope.markerCluster.clearMarkers();
