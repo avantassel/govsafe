@@ -18,6 +18,10 @@ May 17-18 Denver Colorado
 
 > <http://www.govdevchallenge.com/challenge-details/>
 
+### Python Image Manipulation
+Government PDF document manipulation was done via the [pdf-overlay](https://github.com/KioKrofovitch/pdf-overlay)
+ custom script.
+
 ### Final Product
 Developed for Challenge #1
 
