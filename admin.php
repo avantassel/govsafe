@@ -90,24 +90,16 @@ if(!empty($api_response))
               <td><button class="button">Print</button></td>
               <td><?=$r->metadata->date_submit?></td>
               <? foreach($r->answers as $k=>$v){ ?>
-                <td>
-                <label for="<?=$r->token.$k?>"><?=$v?></label>
-                <? if(!empty($v) && strstr($k, 'list')){
-                      echo '<input type="checkbox" id="'.$r->token.$k.'"/>';
-                  }
-                  ?>
+                <td <? if(!empty($v) && strstr($k, 'list')) echo 'class="help-needed"';?>>
+                  <label for="<?=$r->token.$k?>"><?=$v?></label>                
                 </td>              
               <? } ?>   
               <? foreach($r->hidden as $k=>$v){ 
                 if($k=='location')
                   $users .= '|'.$v;
                 ?>
-                <td>
-                  <label for="<?=$r->token.$k?>"><?=$v?></label>
-                <? if(!empty($v) && strstr($k, 'list')){
-                      echo '<input type="checkbox" id="'.$r->token.$k.'"/>';
-                  }
-                  ?>
+                <td <? if(!empty($v) && strstr($k, 'list')) echo 'class="help-needed"';?>>
+                  <label for="<?=$r->token.$k?>"><?=$v?></label>                
                 </td>              
               <? } ?>              
             </tr>
@@ -152,6 +144,14 @@ if(!empty($api_response))
       $(document).foundation();     
       var  markers = [];
       $(document).ready(function () {    
+
+        $(".help-needed").on('click',function(){
+          if($(this).hasClass('saved'))
+            $(this).removeClass('saved');
+          else 
+            $(this).addClass('saved');
+        });
+
           var myLatlng = new google.maps.LatLng(39.733494799999995,-104.9926846);
           var mapOptions = {
               center: new google.maps.LatLng(39.733494799999995,-104.9926846),

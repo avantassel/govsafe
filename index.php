@@ -1,4 +1,8 @@
 
+<?
+  $centers=file_get_contents('centers.json');
+  $centers_json=json_decode($centers);
+?>
 <!doctype html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
@@ -70,8 +74,9 @@
               <li class="cta-button">                
                 <a href="#" data-dropdown="center" class="button dropdown">Choose</a><br>
                 <ul id="center" data-dropdown-content class="f-dropdown">
-                  <li><a href="#">Boulder</a></li>
-                  <li><a href="#">Denver</a></li>
+                  <? foreach ($centers_json->centers as $c) {?>
+                    <li data-location="<?=$c->location?>" data-center="<?=$c->name?>"><a href="#"><?=$c->name?></a></li>
+                  <? } ?>
                 </ul>
               </li>
             </ul>
@@ -154,7 +159,7 @@
 
     $('#center li').on('click',function(){
       $('.step2 span').addClass('done');
-      center = $(this).find('a').html();   
+      center = $(this).data('center');   
       $('#start-form').attr('href',form_href+'?location='+loc+'&center='+center);
     });
 
@@ -171,8 +176,16 @@
           var marker = new google.maps.Marker({
               position: myLatlng,
               map: map,
-              title: "Your Location"
+              image: 'images/user.png'
           });
+
+          <? foreach ($centers_json->centers as $c) {?>
+            var marker = new google.maps.Marker({
+              position: new google.maps.LatLng(<?=$c->location?>),
+              map: map,
+              image: 'images/center.png'
+            });
+          <? } ?>
           
           $('#start-form').attr('href',form_href+'?location='+loc+'&center='+center);
           $('#start-form').removeClass('hide');

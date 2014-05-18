@@ -12,7 +12,7 @@ May 17-18 Denver Colorado
 
 * [@KioKrofovitch](https://github.com/KioKrofovitch)
 
-* Mike
+* [@snowbot](https://github.com/snowbot)
 
 ### Challenges
 
