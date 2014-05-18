@@ -1,4 +1,3 @@
-
 <?
 $api_key = '06e283cf9a2f96c5674821ef2335742b8f4a362b';
 $api_url = 'https://api.typeform.com/v0/form/ToheBD?key=06e283cf9a2f96c5674821ef2335742b8f4a362b&completed=true';
@@ -87,7 +86,7 @@ if(!empty($api_response))
                   continue;
               ?>
             <tr>
-              <td><button class="button">Print</button></td>
+              <td><button id="printBtn" class="button">Print</button></td>
               <td><?=$r->metadata->date_submit?></td>
               <? foreach($r->answers as $k=>$v){ ?>
                 <td>
@@ -117,6 +116,8 @@ if(!empty($api_response))
         <? } ?>
         </div>
         </div>
+
+        <div id="placeholder" style="display:none;"></div>
  
       <!-- Footer -->
  
@@ -149,6 +150,32 @@ if(!empty($api_response))
     <script src="js/jquery.geolocation.js"></script>
     
       <script type="text/javascript">
+      
+
+      function PdfUtil(url) {
+          var iframe;
+          var __construct = function(url) {
+              iframe = getContentIframe(url);
+          }
+          var getContentIframe = function(url) {
+              var iframe = document.createElement('iframe');
+              iframe.src = url;
+              return iframe;
+          }
+          this.display = function(parentDomElement) {
+              parentDomElement.appendChild(iframe);
+          }
+          this.print = function() {
+              try {
+                  iframe.contentWindow.print();
+              } catch(e) {
+                  throw new Error("Printing failed.");
+              }
+          }
+          __construct(url);
+      }
+
+
       $(document).foundation();     
       var  markers = [];
       $(document).ready(function () {    
@@ -176,6 +203,14 @@ if(!empty($api_response))
           <? } } ?>
           if(markers)
             var markerCluster = new MarkerClusterer(map, markers);
+
+
+          var pdf = new PdfUtil('/pdf/Sue_Vivor.pdf');
+          pdf.display(document.getElementById('placeholder'));
+
+          document.getElementById('printBtn').onclick = function() {
+              pdf.print();
+          }
       });     
     </script>
   </body>
