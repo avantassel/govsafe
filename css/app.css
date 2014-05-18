@@ -26,3 +26,12 @@ span.step.done {
 .steps .columns {
 	min-height: 200px !important;
 }
+
+.row.full-width {
+    width: 100%;
+    max-width: 100%;
+}
+
+#maparea img {
+max-width: none;
+}

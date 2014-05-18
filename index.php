@@ -28,6 +28,7 @@
  
         <ul class="button-group">
           <li><a href="#" class="button">About</a></li>
+          <li><a href="admin.php" class="button">Admin</a></li>
         </ul>
  
       <!-- End Navigation -->
@@ -36,13 +37,7 @@
  
         <div class="row panel">
  
-          <div class="large-4 columns">
- 
-              <h4 class="hide-for-small"><img src="/images/safe-logo-simple.png" width="200"/></h4>                          
-            
-          </div>
-
-          <div class="large-8 columns">
+          <div class="large-12 columns">
             
             <p>
                 SAFE is the Survivor Assistance Form Editor
@@ -87,7 +82,7 @@
             <ul class="pricing-table">
               <li class="title step3"><span class="step">3</span> Form</li>
               <li class="description">Fill out one form</li>
-              <li class="cta-button"><a class="typeform-share button" id="start-form" href="https://avantassel.typeform.com/to/ToheBD" data-mode="1" target="_blank">Get Started</a></li>
+              <li class="cta-button"><a class="typeform-share button" id="start-form" href="https://avantassel.typeform.com/to/ToheBD" data-mode="1" target="_self">Get Started</a></li>
             </ul>
           </div>
  
@@ -144,6 +139,9 @@
     <script src="js/jquery.geolocation.js"></script>
     <script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'share.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}id=id+'_';if(!gi.call(d,id)){qs=ce.call(d,'link');qs.rel='stylesheet';qs.id=id;qs.href=b+'share-button.css';s=gt.call(d,'head')[0];}})()</script>
     <script type="text/javascript">
+    var form_href = 'https://avantassel.typeform.com/to/ToheBD';
+    var loc = '';
+    var center = '';
 
     $(document).ready(function () {
     
@@ -155,13 +153,14 @@
 
     $('#center li').on('click',function(){
       $('.step2 span').addClass('done');
-      $center = $(this).find('a').html();
-      $href = $('#start-form').attr('href');
-      $('#start-form').attr('href',$href+'&center='+$center);
+      center = $(this).find('a').html();   
+      $('#start-form').attr('href',form_href+'?location='+loc+'&center='+center);
     });
 
     function locate(){
       $.geolocation(function (lat, lng) {
+          loc=lat+','+lng;
+
           var myLatlng = new google.maps.LatLng(lat, lng);
           var mapOptions = {
               center: new google.maps.LatLng(lat, lng),
@@ -173,8 +172,8 @@
               map: map,
               title: "Your Location"
           });
-          $href = $('#start-form').attr('href');
-          $('#start-form').attr('href',$href+'?ll='+lat+','+lng);
+          
+          $('#start-form').attr('href',form_href+'?location='+loc+'&center='+center);
           $('#start-form').removeClass('hide');
 
           $('.step1 span').addClass('done');

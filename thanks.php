@@ -15,8 +15,7 @@
 
     <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/app.css" />
-    <script src="js/vendor/modernizr.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsbzoLjGocnaRHZF3IBMFVI-X41vPl6qM&sensor=true"></script>
+    <script src="js/vendor/modernizr.js"></script>    
   </head>
   <body>
     
@@ -27,7 +26,8 @@
       <!-- Navigation -->
  
         <ul class="button-group">
-          <li><a href="#" class="button">About</a></li>
+          <li><a href="index.php" class="button">Home</a></li>
+          <li><a href="admin.php" class="button">Admin</a></li>
         </ul>
  
       <!-- End Navigation -->
@@ -36,24 +36,19 @@
  
         <div class="row panel">
  
-          <div class="large-4 columns">
- 
-              <h4 class="hide-for-small"><img src="/images/safe-logo-simple.png" width="200"/></h4>                          
-            
-          </div>
-
-          <div class="large-8 columns">
+          <div class="large-12 columns">
             
             <p>
                 SAFE is the Survivor Assistance Form Editor
             </p>
-            <h2>One form to start state assistance.</h2>
+            <h2>Thank you we'll see you soon.</h2>
 
             <h5 class="subheader"></h5>
-            </div>
-          
+                      
         </div>
- 
+  
+    </div>
+
       <!-- End Header Content -->
  
  
@@ -87,14 +82,14 @@
             <ul class="pricing-table">
               <li class="title step3"><span class="step done">3</span> Form</li>
               <li class="description">Fill out one form</li>
-              <li class="cta-button"><a class="typeform-share button" id="start-form" href="https://avantassel.typeform.com/to/ToheBD" data-mode="1" target="_blank">Get Started</a></li>
+              <li class="cta-button"><a class="typeform-share button" id="start-form" href="https://avantassel.typeform.com/to/ToheBD" data-mode="1" target="_self">Get Started</a></li>
             </ul>
           </div>
  
           <div class="large-3 small-12 columns">
             <ul class="pricing-table">
-              <li class="title step4"><span class="step">4</span> Status</li>
-              <li class="description">Track the status with the state</li>
+              <li class="title step4"><span class="step done">4</span> Status</li>
+              <li class="description">Track your status with the state</li>
               <li class="cta-button"><a class="button" href="#">Track</a></li>
             </ul>
           </div>
@@ -103,6 +98,7 @@
  
         <div class="row"> 
             <div class="large-12 columns">
+              <h2>Your forms have been submitted to the assistence center.</h2>
           <div class="progress small-12 large-12 success] radius">
             <span class="meter" style="width: 10%"></span>            
           </div>
