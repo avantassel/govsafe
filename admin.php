@@ -1,13 +1,3 @@
-<?
-$api_key = '06e283cf9a2f96c5674821ef2335742b8f4a362b';
-$api_url = 'https://api.typeform.com/v0/form/ToheBD?key=06e283cf9a2f96c5674821ef2335742b8f4a362b&completed=true';
-$users = "";
-$fields = array('textfield_913754','email_913755','textarea_913965','number_913759','dropdown_913966','hidden_center');
-
-$api_response=@file_get_contents($api_url);
-if(!empty($api_response))
-  $api_response_json=json_decode($api_response);
-?>
 <!doctype html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
@@ -27,6 +17,9 @@ if(!empty($api_response))
     <script src="js/vendor/modernizr.js"></script>    
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsbzoLjGocnaRHZF3IBMFVI-X41vPl6qM&sensor=true"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script type="text/javascript">
+    var pdf;
+    </script>
   </head>
   <body ng-app="govsafeApp">
     
@@ -93,7 +86,7 @@ if(!empty($api_response))
           </thead>
           <tbody>            
             <tr ng-repeat="response in responses | filter:searchText">
-              <td><button class="printBtn button">Print</button></td>
+              <td><button onclick="pdf.print();" class="button">Print</button></td>
               <td>{{response.metadata.date_submit}}</td>              
               <td>{{response.answers.textfield_913754}}</td>
               <td>{{response.answers.textarea_913965}}</td>
@@ -170,12 +163,8 @@ if(!empty($api_response))
 
       $(document).ready(function () {    
 
-          var pdf = new PdfUtil('/pdf/Sue_Vivor.pdf');
-          pdf.display(document.getElementById('placeholder'));
-
-          $('.printBtn').on('click', function() {
-              pdf.print();
-          });
+          pdf = new PdfUtil('/pdf/Sue_Vivor.pdf');
+          pdf.display(document.getElementById('placeholder'));         
       });     
     </script>
   </body>
