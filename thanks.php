@@ -15,7 +15,8 @@
 
     <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/app.css" />
-    <script src="js/vendor/modernizr.js"></script>    
+    <script src="js/vendor/modernizr.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsbzoLjGocnaRHZF3IBMFVI-X41vPl6qM&sensor=true"></script>
   </head>
   <body>
     
@@ -34,21 +35,17 @@
  
       <!-- Header Content -->
  
-        <div class="row panel">
- 
-          <div class="large-12 columns">
-            
-            <p>
-                SAFE is the Survivor Assistance Form Editor
-            </p>
-            <h2>Thank you we'll see you soon.</h2>
-
-            <h5 class="subheader"></h5>
-                      
+        <div class="row panel header">
+          <div class="large-2 columns">
+            <img src="images/safe-logo.png">
+          </div>
+          <div class="large-10 columns">
+            <p>Survivor Assistance Form Editor</p>
+            <h2>One form to start disaster assistance.</h2>
+          </div>
+          
         </div>
-  
-    </div>
-
+ 
       <!-- End Header Content -->
  
  
@@ -131,6 +128,7 @@
                   <ul class="inline-list right">
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
+                    <li><a href="/login.php">Admin Login</a></li>
                   </ul>
               </div>
  
