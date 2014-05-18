@@ -33,6 +33,7 @@ span.step.done {
 }
 
 #maparea img {
+<<<<<<< HEAD
 	max-width: none;
 }
 
@@ -85,4 +86,10 @@ span.step.done {
 }
 .saved label{
 	color: #ffffff;
+	max-width: none;
+}
+
+
+.row.header {
+	margin: 0 0 1em;
 }

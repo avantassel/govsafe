@@ -1,4 +1,3 @@
-
 <?
 $api_key = '06e283cf9a2f96c5674821ef2335742b8f4a362b';
 $api_url = 'https://api.typeform.com/v0/form/ToheBD?key=06e283cf9a2f96c5674821ef2335742b8f4a362b&completed=true';
@@ -83,7 +82,7 @@ if(!empty($api_response))
           </thead>
           <tbody>            
             <tr ng-repeat="response in responses">
-              <td><button class="button">Print</button></td>
+              <td><button class="printBtn button">Print</button></td>
               <td>{{response.metadata.date_submit}}</td>              
               <td ng-repeat="(k,v) in response.answers" ng-class="hasList(k,v)" ng-click="toggleSave($event)">
                 {{v}}
@@ -98,6 +97,8 @@ if(!empty($api_response))
         <? } ?>
         </div>
         </div>
+
+        <div id="placeholder" style="display:none;"></div>
  
       <!-- Footer -->
  
@@ -133,5 +134,40 @@ if(!empty($api_response))
       <script type="text/javascript">
         $(document).foundation();            
       </script>
+
+      function PdfUtil(url) {
+          var iframe;
+          var __construct = function(url) {
+              iframe = getContentIframe(url);
+          }
+          var getContentIframe = function(url) {
+              var iframe = document.createElement('iframe');
+              iframe.src = url;
+              return iframe;
+          }
+          this.display = function(parentDomElement) {
+              parentDomElement.appendChild(iframe);
+          }
+          this.print = function() {
+              try {
+                  iframe.contentWindow.print();
+              } catch(e) {
+                  throw new Error("Printing failed.");
+              }
+          }
+          __construct(url);
+      }
+
+
+      $(document).ready(function () {    
+
+          var pdf = new PdfUtil('/pdf/Sue_Vivor.pdf');
+          pdf.display(document.getElementById('placeholder'));
+
+          $('.printBtn').on('click', function() {
+              pdf.print();
+          });
+      });     
+    </script>
   </body>
 </html>
