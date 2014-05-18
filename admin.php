@@ -26,12 +26,12 @@ if(!empty($api_response))
     <link rel="stylesheet" href="css/app.css" />
     <script src="js/vendor/modernizr.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsbzoLjGocnaRHZF3IBMFVI-X41vPl6qM&sensor=true"></script>
-    <script src="js/cluster.js"></script>
+    <script src="js/cluster.js"></script>    
   </head>
-  <body>
+  <body ng-app="govsafeApp">
     
 
- <div class="row full-width">
+ <div class="row full-width" ng-controller="AdminCtrl">
     <div class="large-12 columns">
  
       <!-- Navigation -->
@@ -53,7 +53,7 @@ if(!empty($api_response))
             <p>
                 SAFE is the Survivor Assistance Form Editor
             </p>
-            <h2>Survivors</h2>
+            <h2><span>{{totalSurvivors}}</span> Survivors</h2>
 
             <h5 class="subheader"></h5>
             </div>
@@ -65,7 +65,7 @@ if(!empty($api_response))
  
       <!-- Steps -->
  
-        <div class="row steps">
+        <div class="row steps" >
           <div class="large-12 columns">
 
           <div id="maparea"></div>
@@ -82,28 +82,17 @@ if(!empty($api_response))
             </tr>
           </thead>
           <tbody>            
-            <? foreach($api_response_json->responses as $r){ 
-                if($r->completed=="0")
-                  continue;
-              ?>
-            <tr>
+            <tr ng-repeat="response in responses">
               <td><button class="button">Print</button></td>
-              <td><?=$r->metadata->date_submit?></td>
-              <? foreach($r->answers as $k=>$v){ ?>
-                <td <? if(!empty($v) && strstr($k, 'list')) echo 'class="help-needed"';?>>
-                  <label for="<?=$r->token.$k?>"><?=$v?></label>                
-                </td>              
-              <? } ?>   
-              <? foreach($r->hidden as $k=>$v){ 
-                if($k=='location')
-                  $users .= '|'.$v;
-                ?>
-                <td <? if(!empty($v) && strstr($k, 'list')) echo 'class="help-needed"';?>>
-                  <label for="<?=$r->token.$k?>"><?=$v?></label>                
-                </td>              
-              <? } ?>              
+              <td>{{response.metadata.date_submit}}</td>              
+              <td ng-repeat="(k,v) in response.answers" ng-class="hasList(k,v)" ng-click="toggleSave($event)">
+                {{v}}
+              </td>
+              <td ng-repeat="(k,v) in response.hidden" ng-class="hasList(k,v)" ng-click="toggleSave($event)">
+                {{v}}
+              </td>    
             </tr>
-            <? } ?>
+            
           </tbody>
         </table>
         <? } ?>
@@ -136,47 +125,13 @@ if(!empty($api_response))
     </div>
   </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="../js/foundation.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="js/foundation.min.js"></script>
     <script src="js/jquery.geolocation.js"></script>
-    
+    <script src="js/admin.js"></script>
+        
       <script type="text/javascript">
-      $(document).foundation();     
-      var  markers = [];
-      $(document).ready(function () {    
-
-        $(".help-needed").on('click',function(){
-          if($(this).hasClass('saved'))
-            $(this).removeClass('saved');
-          else 
-            $(this).addClass('saved');
-        });
-
-          var myLatlng = new google.maps.LatLng(39.733494799999995,-104.9926846);
-          var mapOptions = {
-              center: new google.maps.LatLng(39.733494799999995,-104.9926846),
-              zoom: 10,
-              panControl: true,
-              zoomControl: true,
-              scaleControl: true              
-          };
-          var map = new google.maps.Map(document.getElementById("maparea"), mapOptions);
-          <? if(!empty($users)){ 
-            $index=0;
-            $users_array=explode("|", $users);
-            foreach ($users_array as $u){
-              $index++;
-              if(empty($u))
-                continue;
-            ?>
-            var marker = new google.maps.Marker({
-              position: new google.maps.LatLng(<?=$u?>)
-            });
-            markers.push(marker);
-          <? } } ?>
-          if(markers)
-            var markerCluster = new MarkerClusterer(map, markers);
-      });     
-    </script>
+        $(document).foundation();            
+      </script>
   </body>
 </html>

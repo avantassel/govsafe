@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/app.css" />
     <script src="js/vendor/modernizr.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsbzoLjGocnaRHZF3IBMFVI-X41vPl6qM&sensor=true"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsbzoLjGocnaRHZF3IBMFVI-X41vPl6qM&sensor=true&libraries=geometry"></script>
   </head>
   <body>
     
@@ -75,7 +75,7 @@
                 <a href="#" data-dropdown="center" class="button dropdown">Choose</a><br>
                 <ul id="center" data-dropdown-content class="f-dropdown">
                   <? foreach ($centers_json->centers as $c) {?>
-                    <li data-location="<?=$c->location?>" data-center="<?=$c->name?>"><a href="#"><?=$c->name?></a></li>
+                    <li data-lat="<?=$c->lat?>" data-lng="<?=$c->lng?>" data-center="<?=$c->name?>" id="<?=$c->id?>"><a href="#"><?=$c->name?></a></li>
                   <? } ?>
                 </ul>
               </li>
@@ -139,8 +139,8 @@
   </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="../js/foundation.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="js/jquery.geolocation.js"></script>
+    
     <script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'share.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}id=id+'_';if(!gi.call(d,id)){qs=ce.call(d,'link');qs.rel='stylesheet';qs.id=id;qs.href=b+'share-button.css';s=gt.call(d,'head')[0];}})()</script>
     <script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'share.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}id=id+'_';if(!gi.call(d,id)){qs=ce.call(d,'link');qs.rel='stylesheet';qs.id=id;qs.href=b+'share-button.css';s=gt.call(d,'head')[0];}})()</script>
 
@@ -148,7 +148,7 @@
     var form_href = 'https://avantassel.typeform.com/to/ToheBD';
     var loc = '';
     var center = '';
-
+    var center_list = <?=json_encode($centers_json->centers);?>;
     $(document).ready(function () {
     
     locate();
@@ -176,15 +176,22 @@
           var marker = new google.maps.Marker({
               position: myLatlng,
               map: map,
-              image: 'images/user.png'
+              icon: '/images/user.png'
+          });
+
+          $.each(center_list,function(k,v){
+            var from = new google.maps.LatLng(lat,lng);
+            var to   = new google.maps.LatLng(v.lat,v.lng);
+            var dist = google.maps.geometry.spherical.computeDistanceBetween(from, to);
+            $('#'+v.id).html($('#'+v.id).html()+' '+dist);
           });
 
           <? foreach ($centers_json->centers as $c) {?>
             var marker = new google.maps.Marker({
-              position: new google.maps.LatLng(<?=$c->location?>),
+              position: new google.maps.LatLng(<?=$c->lat.','.$c->lng?>),
               map: map,
-              image: 'images/center.png'
-            });
+              icon: '/images/center.png'
+            });            
           <? } ?>
           
           $('#start-form').attr('href',form_href+'?location='+loc+'&center='+center);
