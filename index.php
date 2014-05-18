@@ -176,12 +176,12 @@
               icon: '/images/user.png'
           });
 
-          $.each(center_list,function(k,v){
-            var from = new google.maps.LatLng(lat,lng);
-            var to   = new google.maps.LatLng(v.lat,v.lng);
-            var dist = google.maps.geometry.spherical.computeDistanceBetween(from, to);
-            $('#'+v.id).html($('#'+v.id).html()+' '+dist);
-          });
+          // $.each(center_list,function(k,v){
+          //   var from = new google.maps.LatLng(lat,lng);
+          //   var to   = new google.maps.LatLng(v.lat,v.lng);
+          //   var dist = google.maps.geometry.spherical.computeDistanceBetween(from, to);
+          //   $('#'+v.id).html($('#'+v.id).html()+' '+dist);
+          // });
 
           <? foreach ($centers_json->centers as $c) {?>
             var marker = new google.maps.Marker({
