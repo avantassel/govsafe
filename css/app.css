@@ -33,5 +33,56 @@ span.step.done {
 }
 
 #maparea img {
-max-width: none;
+	max-width: none;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotateX(0deg);
+  }
+  100% {
+    -webkit-transform: rotateX(360deg);
+  }
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotateX(0deg);
+  }
+  100% {
+    -moz-transform: rotateX(360deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotateX(0deg);
+  }
+  100% {
+    -o-transform: rotateX(360deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(360deg);
+  }
+}
+
+.help-needed {
+	cursor: pointer;
+}
+.saved {
+  background-color: #40A20F;  
+  -webkit-animation-name: spin;
+  -moz-animation-name: spin;
+  -o-animation-name: spin;
+  animation-name: spin;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+.saved label{
+	color: #ffffff;
 }
