@@ -74,6 +74,7 @@ span.step.done {
 }
 .saved {
   background-color: #40A20F;  
+  color: #ffffff;
   -webkit-animation-name: spin;
   -moz-animation-name: spin;
   -o-animation-name: spin;
@@ -82,10 +83,6 @@ span.step.done {
   animation-duration: 1s;
   -webkit-animation-timing-function: ease;
   animation-timing-function: ease;
-}
-.saved label{
-	color: #ffffff;
-	max-width: none;
 }
 
 .row.header {
