@@ -1,7 +1,7 @@
 
 <?
 $api_key = '06e283cf9a2f96c5674821ef2335742b8f4a362b';
-$api_url = 'https://api.typeform.com/v0/form/ToheBD?key=06e283cf9a2f96c5674821ef2335742b8f4a362b&completed=true';
+$api_url = 'https://api.typeform.com/v0/form/QFKQ48?key=06e283cf9a2f96c5674821ef2335742b8f4a362b&completed=true';
 $users = "";
 
 $api_response=@file_get_contents($api_url);
@@ -25,8 +25,7 @@ if(!empty($api_response))
     <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/app.css" />
     <script src="js/vendor/modernizr.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsbzoLjGocnaRHZF3IBMFVI-X41vPl6qM&sensor=true"></script>
-    <script src="js/cluster.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsbzoLjGocnaRHZF3IBMFVI-X41vPl6qM&sensor=true"></script>    
   </head>
   <body>
     
@@ -53,7 +52,7 @@ if(!empty($api_response))
             <p>
                 SAFE is the Survivor Assistance Form Editor
             </p>
-            <h2>Survivors</h2>
+            <h2>Volunteers</h2>
 
             <h5 class="subheader"></h5>
             </div>
@@ -68,13 +67,10 @@ if(!empty($api_response))
         <div class="row steps">
           <div class="large-12 columns">
 
-          <div id="maparea"></div>
-
           <? if(!empty($api_response_json)){ ?>
-          <table>
+          <table width="100%">
           <thead>
             <tr>
-              <th></th>
               <th>Date</th>
               <? foreach($api_response_json->questions as $q){ ?>
               <th><?=$q->question?></th>
@@ -87,7 +83,7 @@ if(!empty($api_response))
                   continue;
               ?>
             <tr>
-              <td><button class="button">Print</button></td>
+              
               <td><?=$r->metadata->date_submit?></td>
               <? foreach($r->answers as $k=>$v){ ?>
                 <td>
@@ -145,38 +141,6 @@ if(!empty($api_response))
   </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="../js/foundation.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script src="js/jquery.geolocation.js"></script>
-    
-      <script type="text/javascript">
-      $(document).foundation();     
-      var  markers = [];
-      $(document).ready(function () {    
-          var myLatlng = new google.maps.LatLng(39.733494799999995,-104.9926846);
-          var mapOptions = {
-              center: new google.maps.LatLng(39.733494799999995,-104.9926846),
-              zoom: 10,
-              panControl: true,
-              zoomControl: true,
-              scaleControl: true              
-          };
-          var map = new google.maps.Map(document.getElementById("maparea"), mapOptions);
-          <? if(!empty($users)){ 
-            $index=0;
-            $users_array=explode("|", $users);
-            foreach ($users_array as $u){
-              $index++;
-              if(empty($u))
-                continue;
-            ?>
-            var marker = new google.maps.Marker({
-              position: new google.maps.LatLng(<?=$u?>)
-            });
-            markers.push(marker);
-          <? } } ?>
-          if(markers)
-            var markerCluster = new MarkerClusterer(map, markers);
-      });     
-    </script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>   
   </body>
 </html>
