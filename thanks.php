@@ -1,6 +1,16 @@
 <?
   $centers=file_get_contents('centers.json');
   $centers_json=json_decode($centers);
+
+  $api_url = 'https://api.typeform.com/v0/form/ToheBD?key=06e283cf9a2f96c5674821ef2335742b8f4a362b&completed=true';
+  $api_response=@file_get_contents($api_url);
+  $api_response_json=json_decode($api_response);
+  $users = $api_response_json->stats->responses->completed;  
+  //assuming 30 min per person and 10 volunteers
+  if(round(($users*30)/10)>60)
+    $wait = round((($users*30)/10)/60)." hrs";
+  else
+    $wait = round(($users*30)/10)." min";
 ?>
 <?php
 require('Services/Twilio.php'); 
@@ -86,13 +96,17 @@ $client->account->messages->create(array(
           </div>
 
           <div class="row">
-            <div class="large-12 columns">
+            <div class="large-8 columns">
               <p>You have choosen <b>Denver - Cheeseman Park</b> for your disaster assistance center.</p>
               <p>Cheeseman Park<br>
                 1599 E 8th Ave<br>
                 Denver, CO 80218<br>
               </p>
               <p>Phone: 303-389-2393</p>
+            </div>
+            <div class="large-4 columns">
+              <h5>Your Estimated wait time is <strong><?=$wait?></strong>.</h5>
+              <h5>There are <strong><?=($users-1)?></strong> ahead of you.</h5>
             </div>
           </div>
 

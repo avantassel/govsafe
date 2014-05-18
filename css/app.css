@@ -88,7 +88,13 @@ span.step.done {
 	max-width: none;
 }
 
-
 .row.header {
 	margin: 0 0 1em;
+}
+
+.f-dropdown{
+  min-width: 285px;  
+}
+.f-dropdown li{
+  text-align: left;
 }
