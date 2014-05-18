@@ -63,7 +63,7 @@
             <ul class="pricing-table">
               <li class="title step1"><span class="step">1</span> Locate</li>
               <li class="description">Get your current location</li>
-              <li class="cta-button"><a class="button" id="locate" href="#">Locate You</a></li>
+              <li class="cta-button"><a class="button" id="locate" href="#">Locate Me</a></li>
             </ul>
           </div>
  
@@ -190,8 +190,10 @@
             var marker = new google.maps.Marker({
               position: new google.maps.LatLng(<?=$c->lat.','.$c->lng?>),
               map: map,
-              icon: '/images/center.png'
-            });            
+              icon: '/images/center.png',
+              title: "<?=$c->name?>"
+            });     
+            
           <? } ?>
           
           $('#start-form').attr('href',form_href+'?location='+loc+'&center='+center);
