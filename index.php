@@ -71,7 +71,7 @@
                 <a href="#" data-dropdown="center" class="button dropdown">Choose</a><br>
                 <ul id="center" data-dropdown-content class="f-dropdown">
                   <? foreach ($centers_json->centers as $c) {?>
-                    <li data-lat="<?=$c->lat?>" data-lng="<?=$c->lng?>" data-center="<?=$c->name?>" id="<?=$c->id?>"><a href="#"><?=$c->name?></a></li>
+                    <li data-lat="<?=$c->lat?>" data-lng="<?=$c->lng?>" data-center="<?=$c->name?>" id="<?=$c->id?>"><a href="#"><strong><?=$c->name?></strong> <?=$c->dist?></a></li>
                   <? } ?>
                 </ul>
               </li>
