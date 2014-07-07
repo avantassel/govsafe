@@ -30,7 +30,8 @@
       <!-- Navigation -->
  
         <ul class="button-group">
-          <li><a class="typeform-share button" href="https://avantassel.typeform.com/to/QFKQ48" data-mode="1" target="_self">Volunteer</a></li>          
+          <li><a class="typeform-share button" href="https://avantassel.typeform.com/to/QFKQ48" data-mode="1" target="_self">Volunteer</a></li> 
+          <li class="right">Log in here with <img src="img/civicid.png"></li>         
         </ul>
  
       <!-- End Navigation -->
