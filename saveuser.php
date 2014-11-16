@@ -6,13 +6,21 @@
 	  exit;
 	}
 
+	require_once 'lib/load.php';
+	$user = new User;
+
 	$data = file_get_contents("php://input");
 	$result = array();
 	
 	if(!empty($data))
 		$result = @json_decode($data,true);
 
-	$result['success']=true;
+	if(!empty($result)){
+		$user->saveUser($result);
+		$result['success']=true;
+	} else {
+		$result['success']=false;
+	}
 	
 	header("Access-Control-Allow-Origin: *");
 	header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
