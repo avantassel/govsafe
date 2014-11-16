@@ -1,13 +1,23 @@
 <?php
+	
+	if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+	  header("Access-Control-Allow-Origin: *");
+	  header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+	  exit;
+	}
 
-	$result = $_POST;
+	$data = file_get_contents("php://input");
+	$result = array();
+	
+	if(!empty($data))
+		$result = @json_decode($data,true);
+
 	$result['success']=true;
 	
 	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 	header("Content-type: application/json");
-	if(isset($_GET['callback']))
-		echo $_GET['callback'] . ' (' . json_encode($result) . ');';	
-	else
-		echo json_encode($result);
+	
+	echo json_encode($result);
 	
 ?>

@@ -27,10 +27,23 @@ class RedCross {
 		$cached = false;
 
 		$collection = $this->connection->getConn()->centers;
-		$centers = $collection->findOne(array('updated'=>array('$gt'=>date('U',strtotime('-7 days')))));
+		$centers = $collection->findOne(array('updated'=>array('$gt'=>date('U',strtotime('-1 days')))));
 
 		if(empty($centers)){
-			$centers=self::GetRedCross();
+			//check for error from redcross and return last set of centers
+			if(($centers=self::GetRedCross()) === false){
+				$centers = $collection->findOne();
+				//update date so we don't hit redcross for another day
+				if(!empty($centers)){
+					$collection->update(array('_id'=>new MongoId($centers['_id']))
+						,array('$set'=>array('updated'=>date('U'))));
+				}
+			} else if(!empty($centers['Locations'])){
+				//insert new centers
+				$collection = $this->connection->getConn()->centers; 
+	        	$centers['updated'] = date('U');
+	        	$collection->insert($centers);
+			}
 		} else {
 			$cached = true;
 		}
@@ -42,11 +55,12 @@ class RedCross {
 				$centers['Locations'][$r]['distance']=self::getDistance(array('lat'=>$latlng[0],'lng'=>$latlng[1]),array('lat'=>$centers['Locations'][$r]['lat'],'lng'=>$centers['Locations'][$r]['lng'])).' mi';
 	    }
 		
-		return array('meta'=>array('cached'=>$cached,'updated'=>date('c',$centers['updated']))
+		return array('meta'=>array('cached'=>$cached,'updated'=>!empty($centers['updated'])?date('c',$centers['updated']):date('c'))
 			,'paging'=>array('total'=>!empty($centers['Locations'])?count($centers['Locations']):0)
 			,'centers'=>!empty($centers['Locations'])?$centers['Locations']:array());
 	}
 
+	// http://www.redcross.org/find-help/shelter
 	public function GetRedCross(){
 		$ch = curl_init(); 
 
@@ -59,16 +73,16 @@ class RedCross {
         // $output contains the output string 
         $output = curl_exec($ch); 
 
+        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
         // close curl resource to free up system resources 
         curl_close($ch);   
 
-        $json_response = json_decode($output,true);  
+        if ( $status != 200 )
+        	return false;
 
-        if(!empty($json_response['Locations'])){
-        	$collection = $this->connection->getConn()->centers; 
-        	$json_response['updated'] = date('U');
-        	$collection->insert($json_response);
-        }
+        $json_response = json_decode($output,true);  
+        
         return $json_response;
 	}
 
