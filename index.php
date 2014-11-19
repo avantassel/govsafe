@@ -1,5 +1,5 @@
 <?
-  $centers=file_get_contents('centers.json');
+  $centers=file_get_contents('http://www.govsafe.org/dac.php');
   $centers_json=json_decode($centers);
 ?>
 <!doctype html>
@@ -32,8 +32,7 @@
         <ul class="button-group">
 
           <li><a class="typeform-share button" href="https://avantassel.typeform.com/to/QFKQ48" data-mode="1" target="_self">Volunteer</a></li> 
-          <li class="right">Log in here with <img src="img/civicid.png"></li>         
-
+          
         </ul>
  
       <!-- End Navigation -->
@@ -74,7 +73,10 @@
                 <a href="#" data-dropdown="center" class="button dropdown">Choose</a><br>
                 <ul id="center" data-dropdown-content class="f-dropdown">
                   <? foreach ($centers_json->centers as $c) {?>
-                    <li data-lat="<?=$c->lat?>" data-lng="<?=$c->lng?>" data-center="<?=$c->name?>" id="<?=$c->id?>"><a href="#"><strong><?=$c->name?></strong> <?=$c->dist?></a></li>
+                    <li data-lat="<?=$c->lat?>" data-lng="<?=$c->lng?>" data-center="<?=$c->name?>"><a href="#">
+                      <strong><?=$c->name?></strong>
+                      </a>
+                    </li>
                   <? } ?>
                 </ul>
               </li>
@@ -137,7 +139,7 @@
  
     </div>
   </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="../js/foundation.min.js"></script>
     <script src="js/jquery.geolocation.js"></script>
     
@@ -170,7 +172,7 @@
           var myLatlng = new google.maps.LatLng(lat, lng);
           var mapOptions = {
               center: new google.maps.LatLng(lat, lng),
-              zoom: 13
+              zoom: 4
           };
           var map = new google.maps.Map(document.getElementById("maparea"), mapOptions);
           var marker = new google.maps.Marker({
@@ -195,7 +197,7 @@
             });     
             
           <? } ?>
-          
+
           $('#start-form').attr('href',form_href+'?location='+loc+'&center='+center);
           $('#start-form').removeClass('hide');
 
