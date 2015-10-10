@@ -14,18 +14,10 @@ May 17-18 Denver Colorado
 
 * [@snowbot](https://github.com/snowbot)
 
-### Challenges
-
-> <http://www.govdevchallenge.com/challenge-details/>
-
-### Python Image Manipulation
-Government PDF document manipulation was done via the [pdf-overlay](https://github.com/KioKrofovitch/pdf-overlay)
- custom script.
-
-### Final Product
-Developed for Challenge #1
-
-> <http://www.govsafe.org>
+### Works With
+* [RedCross](lib/RedCross.php)
+* [Accela](oauth/index.php) - Replace app id and secret
+* [Twilio](thanks.php) - Replace you account id and token
 
 ### Python Image Manipulation
 Government PDF document manipulation was done via the [pdf-overlay](https://github.com/KioKrofovitch/pdf-overlay)
